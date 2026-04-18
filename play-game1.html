@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game One - Play</title>
+
+<style>
+  body {
+    margin: 0;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+  }
+
+  header {
+    padding: 15px 20px;
+    background: #111;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .back {
+    text-decoration: none;
+    color: white;
+    background: #333;
+    padding: 8px 12px;
+    border-radius: 6px;
+  }
+
+  .back:hover {
+    background: #555;
+  }
+
+  .game-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .game-container {
+    position: relative;
+    width: 979px;
+    height: 2119px;
+    transform-origin: center;
+  }
+
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+</style>
+</head>
+
+<body>
+
+<header>
+  <div>Tris</div>
+  <a class="back" href="index.html">Back</a>
+</header>
+
+<div class="game-wrapper">
+  <div class="game-container" id="gameContainer">
+    <iframe src="builds/game1/index.html"></iframe>
+  </div>
+</div>
+
+<script>
+  function scaleGame() {
+    const container = document.getElementById("gameContainer");
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight - 60;
+
+    const gameWidth = 979;
+    const gameHeight = 2119;
+
+    const scaleX = screenWidth / gameWidth;
+    const scaleY = screenHeight / gameHeight;
+
+    const scale = Math.min(scaleX, scaleY);
+
+    container.style.transform = `scale(${scale})`;
+  }
+
+  window.addEventListener("resize", scaleGame);
+  window.addEventListener("load", scaleGame);
+</script>
+
+</body>
+</html>
