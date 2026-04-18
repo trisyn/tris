@@ -76,31 +76,38 @@
     </div>
   </div>
 
-  <script>
-    function scaleGame() {
-      const container = document.getElementById("gameContainer");
-      const gameWidth = 979;
-      const gameHeight = 2119;
-      const headerHeight = 60;
-      const availableWidth = window.innerWidth - 20;
-      const availableHeight = window.innerHeight - headerHeight - 20;
+<script>
+function scaleGame() {
+  const container = document.getElementById("gameContainer");
 
-      let scale;
+  const gameWidth = 979;
+  const gameHeight = 2119;
+  const headerHeight = 60;
 
-      if (window.innerWidth <= 768) {
-        scale = availableWidth / gameWidth;
-      } else {
-        const scaleX = availableWidth / gameWidth;
-        const scaleY = availableHeight / gameHeight;
-        scale = Math.min(scaleX, scaleY);
-      }
+  const availableWidth = window.innerWidth - 20;
+  const availableHeight = window.innerHeight - headerHeight - 20;
 
-      container.style.transform = "scale(" + scale + ")";
-      container.style.marginBottom = ((gameHeight * scale) - gameHeight) + "px";
-    }
+  let scale;
 
-    window.addEventListener("resize", scaleGame);
-    window.addEventListener("load", scaleGame);
-  </script>
+  if (window.innerWidth <= 768) {
+    // Start with width-based scale
+    const widthScale = availableWidth / gameWidth;
+
+    // Height-based scale (so it doesn't cut off bottom)
+    const heightScale = availableHeight / gameHeight;
+
+    // Blend them (THIS is the fix)
+    scale = Math.min(widthScale, heightScale * 1.15);
+  } else {
+    const scaleX = availableWidth / gameWidth;
+    const scaleY = availableHeight / gameHeight;
+    scale = Math.min(scaleX, scaleY);
+  }
+
+  container.style.transform = "scale(" + scale + ")";
+}
+window.addEventListener("resize", scaleGame);
+window.addEventListener("load", scaleGame);
+</script>
 </body>
 </html>
