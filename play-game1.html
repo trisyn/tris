@@ -97,7 +97,7 @@ function scaleGame() {
     const heightScale = availableHeight / gameHeight;
 
     // Blend them (THIS is the fix)
-    scale = Math.min(widthScale, heightScale * 1.15);
+    scale = Math.min(widthScale, heightScale * 0.95);
   } else {
     const scaleX = availableWidth / gameWidth;
     const scaleY = availableHeight / gameHeight;
