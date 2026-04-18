@@ -1,98 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Game One - Play</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Game One - Play</title>
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
 
-<style>
-  body {
-    margin: 0;
-    background: #000;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    overflow: hidden;
-    font-family: Arial, sans-serif;
-  }
+    header {
+      height: 60px;
+      padding: 0 20px;
+      background: #111;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
 
-  header {
-    padding: 15px 20px;
-    background: #111;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+    .back {
+      text-decoration: none;
+      color: white;
+      background: #333;
+      padding: 8px 12px;
+      border-radius: 6px;
+    }
 
-  .back {
-    text-decoration: none;
-    color: white;
-    background: #333;
-    padding: 8px 12px;
-    border-radius: 6px;
-  }
+    .back:hover {
+      background: #555;
+    }
 
-  .back:hover {
-    background: #555;
-  }
+    .game-wrapper {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      overflow: auto;
+      padding: 10px 0;
+      -webkit-overflow-scrolling: touch;
+    }
 
-  .game-wrapper {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-  }
+    .game-container {
+      width: 979px;
+      height: 2119px;
+      transform-origin: top center;
+      flex-shrink: 0;
+    }
 
-  .game-container {
-    position: relative;
-    width: 979px;
-    height: 2119px;
-    transform-origin: center;
-  }
-
-  iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-  }
-</style>
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+      background: #000;
+    }
+  </style>
 </head>
-
 <body>
+  <header>
+    <div>Tris</div>
+    <a class="back" href="index.html">Back</a>
+  </header>
 
-<header>
-  <div>Tris</div>
-  <a class="back" href="index.html">Back</a>
-</header>
-
-<div class="game-wrapper">
-  <div class="game-container" id="gameContainer">
-    <iframe src="builds/game1/index.html"></iframe>
+  <div class="game-wrapper">
+    <div class="game-container" id="gameContainer">
+      <iframe src="builds/game1/index.html" title="Game One"></iframe>
+    </div>
   </div>
-</div>
 
-<script>
-  function scaleGame() {
-    const container = document.getElementById("gameContainer");
-    const screenWidth = window.innerWidth;
-    const screenHeight = window.innerHeight - 60;
+  <script>
+    function scaleGame() {
+      const container = document.getElementById("gameContainer");
+      const gameWidth = 979;
+      const gameHeight = 2119;
+      const headerHeight = 60;
+      const availableWidth = window.innerWidth - 20;
+      const availableHeight = window.innerHeight - headerHeight - 20;
 
-    const gameWidth = 979;
-    const gameHeight = 2119;
+      let scale;
 
-    const scaleX = screenWidth / gameWidth;
-    const scaleY = screenHeight / gameHeight;
+      if (window.innerWidth <= 768) {
+        scale = availableWidth / gameWidth;
+      } else {
+        const scaleX = availableWidth / gameWidth;
+        const scaleY = availableHeight / gameHeight;
+        scale = Math.min(scaleX, scaleY);
+      }
 
-    const scale = Math.min(scaleX, scaleY);
+      container.style.transform = "scale(" + scale + ")";
+      container.style.marginBottom = ((gameHeight * scale) - gameHeight) + "px";
+    }
 
-    container.style.transform = `scale(${scale})`;
-  }
-
-  window.addEventListener("resize", scaleGame);
-  window.addEventListener("load", scaleGame);
-</script>
-
+    window.addEventListener("resize", scaleGame);
+    window.addEventListener("load", scaleGame);
+  </script>
 </body>
 </html>
